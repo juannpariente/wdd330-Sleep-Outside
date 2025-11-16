@@ -4,6 +4,7 @@ function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  getSum(cartItems)
 }
 
 function cartItemTemplate(item) {
@@ -23,6 +24,22 @@ function cartItemTemplate(item) {
 </li>`;
 
   return newItem;
+}
+
+function getSum(cartItems){
+    if (cartItems) {
+      const cartTotal = document.querySelector(".cart-total");
+      const cartFooter = document.querySelector(".cart-footer");
+
+      let sum = 0;
+      cartItems.forEach(item => {
+          sum = sum + item.FinalPrice;
+      });
+
+      cartTotal.textContent = `Total: $${sum}`;
+
+      cartFooter.classList.remove("hide");
+    }
 }
 
 renderCartContents();
